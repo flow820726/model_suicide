@@ -21,6 +21,8 @@ def preprocess_variables(dt, dtid, col_name, date_col, m, params):
     follow_up = params["follow_up"]
     dt['diff'] = (dt['index_date'] - dt[date_col]).dt.days
     dt = dt[(0 < dt['diff']) & (dt['diff'] < follow_up)]
+    # calculate weight
+    dt['weight'] = (follow_up - dt['diff']) / follow_up
     
     # check na id in range true: 9999 false: -9999
     na_id = list(set(dtid['id']) - set(dt['id']))
@@ -28,7 +30,7 @@ def preprocess_variables(dt, dtid, col_name, date_col, m, params):
     method = method_functions[m]
     params["dt"] = dt
     params["col_name"] = col_name    
-    dt = method(**params)    
+    dt = method(**params)
     dtid = dtid.merge(dt, on = 'id', how = 'left')
 
     # fillna
@@ -52,6 +54,7 @@ def get_data(dt_id, var_dict):
         for var_name, table_info in tb_content["variables"].items():
             
             # step1: get_data()
+            var_type = table_info['var_type']
             cols = list(set(table_info['columns']))
             c_var = [x for x in cols if x not in ["index_date"]][0]
             
@@ -71,6 +74,10 @@ def get_data(dt_id, var_dict):
             df_var.rename(columns={id_col:"id"},inplace = True)
             df_var = df_var.merge(dt_id[['id','index_date']], on = 'id', how = 'inner') 
             
+            # data_type transform:
+            if var_type == "cont" or var_type == "ord":
+                df_var = pd.to_numeric(df_var, errors='coerce').astype('float32')
+
             # step3: select calculate_method or not
             if table_info["c_m"] != {''}:
                 for c, p_c in table_info["c_m"].items():
