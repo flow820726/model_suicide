@@ -1,0 +1,19 @@
+{
+    "ICD_PSY_DATA" :{
+        "common_params":{         
+            "id_col":"PS_PID",
+            "date_col":"CHECKDATE"
+        },
+        "variables":{ 
+            "disease_schizophrenia":{ 
+                "columns" : ["ICD_CD"],
+                "c_m": {"isin": {"name_list": ["295", "301.22", "297", "297.9", "298.3", "298.4", 
+                                               "298.8", "297.3", "295.7", "298.1", "298.9"]}},
+                "methods":{"id_exist":{"follow_up": 9999},
+                           "method2":{"follow_up": 9999, "var2":"cont"},
+                            "method3":{"follow_up": 9999, "var3":"asbsww", "var4":"type1"}
+                        }
+            }
+        }
+    }
+}
