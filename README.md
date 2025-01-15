@@ -7,14 +7,13 @@ project_root/
 |   |-- connect_sql_function.py
 |   |-- var_dict.json
 |   |-- variable_function.py
-|-- data_ana/
 |   |-- check_database.ipynb
-|   |-- get_case_control.py
-|   |-- get_variable.py
+|   |-- get_data.py
 |-- model/
 |   |-- training.py
 |   |-- predict.py
 |-- README.md
+|-- unit_test.ipynb
 ```
 
 ## Project Overview

@@ -12,7 +12,6 @@ with open(json_file_path, 'r', encoding='utf-8') as file:
     var_dict = json.load(file)
 
 def preprocess_variables(dt, dtid, col_name, date_col, m, params): 
-
     # step1: check date type
     dt['index_date'] = pd.to_datetime(dt['index_date'])
     dt[date_col] = pd.to_datetime(dt[date_col])
@@ -21,6 +20,7 @@ def preprocess_variables(dt, dtid, col_name, date_col, m, params):
     follow_up = params["follow_up"]
     dt['diff'] = (dt['index_date'] - dt[date_col]).dt.days
     dt = dt[(0 < dt['diff']) & (dt['diff'] < follow_up)]
+    dt = dt.sort_values(by='diff')
     # calculate weight
     dt['weight'] = (follow_up - dt['diff']) / follow_up
     

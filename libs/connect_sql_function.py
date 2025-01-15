@@ -212,3 +212,7 @@ def get_data(table_name, col_name, cond='', id_col='', date_col=''):
     
     return df
             
+
+
+
+            
