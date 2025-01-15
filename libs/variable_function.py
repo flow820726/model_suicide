@@ -23,15 +23,6 @@ def fetch_last_data(dt, col_name):
     dt = dt.groupby(['id']).last().reset_index()
     return dt[['id',col_name]]
 
-# old fetch_exist_data functions
-def fetch_exist_data_old(dt, col_name):
-    if dt.empty:
-        return pd.DataFrame(columns=['id', col_name])
-    dt = dt.groupby('id').apply(
-        lambda dt: int(dt[col_name].notnull().any())
-    ).reset_index(name = f"{col_name}")
-    return dt
-
 def fetch_exist_data(dt, col_name):
     if dt.empty:
         return pd.DataFrame(columns=['id', col_name])
