@@ -2,7 +2,7 @@
 
 ```
 project_root/
-|-- utils/
+|-- libs/
 |   |-- calculate_function.py
 |   |-- connect_sql_function.py
 |   |-- var_dict.json
